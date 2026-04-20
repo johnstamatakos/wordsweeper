@@ -20,7 +20,7 @@ let touchCellEl = null;
 // DOM refs — assigned in DOMContentLoaded
 let gridEl, strikesEl, poolEl, guessEarlyBtn, wordInputArea,
     wordInput, submitGuessBtn, guessFeedback, overlay,
-    overlayIcon, overlayTitle, overlayMsg, newGameBtn,
+    overlayIcon, overlayTitle, overlayMsg,
     overlayResult, statsHeading, overlayActions,
     shareBtn, shareFeedback,
     statPlayed, statWinPct, statStreak, statBest,
@@ -379,7 +379,6 @@ function showOverlay(type) {
   statsHeading.classList.add('is-hidden');
   overlayActions.classList.remove('is-hidden');
   shareBtn.classList.remove('is-hidden');
-  newGameBtn.classList.remove('is-hidden');
   shareFeedback.classList.add('is-hidden');
 
   if (type === 'won') {
@@ -499,11 +498,6 @@ function bindEvents() {
     }
   });
 
-  // "Play Again" button on overlay
-  newGameBtn.addEventListener('click', () => {
-    overlay.classList.add('is-hidden');
-    init();
-  });
 }
 
 function fallbackCopy(text) {
@@ -540,7 +534,6 @@ document.addEventListener('DOMContentLoaded', () => {
   overlayIcon     = document.getElementById('overlay-icon');
   overlayTitle    = document.getElementById('overlay-title');
   overlayMsg      = document.getElementById('overlay-message');
-  newGameBtn      = document.getElementById('new-game-btn');
   overlayResult   = document.getElementById('overlay-result');
   statsHeading    = document.getElementById('stats-heading');
   overlayActions  = document.getElementById('overlay-actions');
