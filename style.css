@@ -148,6 +148,7 @@ main {
   border-radius: var(--radius);
   box-shadow: 0 4px 16px rgba(0,0,0,0.15);
   user-select: none;
+  -webkit-touch-callout: none;
 }
 
 /* --- Cell base --- */
@@ -163,6 +164,7 @@ main {
   line-height: 1;
   position: relative;
   transition: background 0.1s ease, transform 0.1s ease;
+  touch-action: none;
 }
 
 /* --- Cell: hidden --- */

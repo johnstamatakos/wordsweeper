@@ -14,9 +14,8 @@ let showingInput    = false;
 let currentDayIndex = 0;
 
 // Long-press state for touch flagging
-let touchTimer     = null;
-let touchCellEl    = null;
-let longPressFired = false;
+let touchTimer  = null;
+let touchCellEl = null;
 
 // DOM refs — assigned in DOMContentLoaded
 let gridEl, strikesEl, poolEl, guessEarlyBtn, wordInputArea,
@@ -416,9 +415,8 @@ function showStatsOverlay() {
 // ----------------------------------------------------------------
 
 function bindEvents() {
-  // Left click → reveal
+  // Left click → reveal (desktop only; touch is handled via touchend)
   gridEl.addEventListener('click', (e) => {
-    if (longPressFired) { longPressFired = false; return; }
     const cell = e.target.closest('.cell');
     if (!cell) return;
     handleReveal(+cell.dataset.row, +cell.dataset.col);
@@ -432,26 +430,38 @@ function bindEvents() {
     handleFlag(+cell.dataset.row, +cell.dataset.col);
   });
 
-  // Touch: long-press → flag
+  // Touch: short tap → reveal, long-press → flag
+  // Non-passive so e.preventDefault() suppresses the synthetic click event,
+  // avoiding a double-fire on mobile and removing the 300ms tap delay.
   gridEl.addEventListener('touchstart', (e) => {
     const cell = e.target.closest('.cell');
     if (!cell) return;
-    touchCellEl    = cell;
-    longPressFired = false;
-    touchTimer = setTimeout(() => {
-      longPressFired = true;
+    e.preventDefault();
+    touchCellEl = cell;
+    touchTimer  = setTimeout(() => {
       handleFlag(+touchCellEl.dataset.row, +touchCellEl.dataset.col);
-      touchTimer   = null;
-      touchCellEl  = null;
-    }, 450);
-  }, { passive: true });
+      touchTimer  = null;
+      touchCellEl = null;
+    }, 500);
+  }, { passive: false });
 
   gridEl.addEventListener('touchend', () => {
-    if (touchTimer) { clearTimeout(touchTimer); touchTimer = null; }
+    if (touchTimer) {
+      clearTimeout(touchTimer);
+      touchTimer = null;
+      if (touchCellEl) {
+        handleReveal(+touchCellEl.dataset.row, +touchCellEl.dataset.col);
+        touchCellEl = null;
+      }
+    }
   });
 
   gridEl.addEventListener('touchmove', () => {
-    if (touchTimer) { clearTimeout(touchTimer); touchTimer = null; }
+    if (touchTimer) {
+      clearTimeout(touchTimer);
+      touchTimer  = null;
+      touchCellEl = null;
+    }
   });
 
   // "Guess Early" button
