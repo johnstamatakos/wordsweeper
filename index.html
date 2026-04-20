@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Wordsweeper</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div id="app">
+    <header>
+      <div class="header-inner">
+        <h1>Wordsweeper</h1>
+        <div class="header-controls">
+          <div id="strikes" aria-label="Strikes">
+            <span class="strike-dot" aria-hidden="true"></span>
+            <span class="strike-dot" aria-hidden="true"></span>
+            <span class="strike-dot" aria-hidden="true"></span>
+          </div>
+          <button id="stats-btn" class="icon-btn" aria-label="Statistics">📊</button>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <p class="instructions">Reveal cells to find hidden letters. Avoid 💣 bombs — you get 3 strikes. Collect all letters, then guess the word. Right-click or long-press to flag a cell.</p>
+
+      <div id="grid" role="grid" aria-label="Game grid"></div>
+
+      <section id="pool-section" aria-label="Collected letters">
+        <p class="pool-label">Letters found</p>
+        <div id="letter-pool"></div>
+      </section>
+
+      <section id="guess-section">
+        <button id="guess-early-btn" class="btn-secondary">Guess Early</button>
+
+        <div id="word-input-area" class="is-hidden">
+          <div class="input-row">
+            <input
+              type="text"
+              id="word-input"
+              maxlength="10"
+              placeholder="Type the word…"
+              autocomplete="off"
+              spellcheck="false"
+              autocapitalize="characters"
+            >
+            <button id="submit-guess-btn" class="btn-primary">Submit</button>
+          </div>
+          <p id="guess-feedback" class="guess-feedback is-hidden"></p>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <!-- Overlay for win / loss / stats -->
+  <div id="overlay" class="is-hidden" role="dialog" aria-modal="true">
+    <div id="overlay-card">
+      <button id="overlay-close-btn" class="icon-btn" aria-label="Close">✕</button>
+
+      <!-- Game result (hidden in stats-only mode) -->
+      <div id="overlay-result">
+        <div id="overlay-icon"></div>
+        <h2 id="overlay-title"></h2>
+        <p id="overlay-message"></p>
+      </div>
+
+      <!-- Stats-only heading (hidden in game-result mode) -->
+      <h2 id="stats-heading" class="is-hidden">Statistics</h2>
+
+      <!-- Stats bar -->
+      <div class="overlay-stats">
+        <div class="stat-block">
+          <span class="stat-val" id="stat-played">—</span>
+          <span class="stat-label">Played</span>
+        </div>
+        <div class="stat-block">
+          <span class="stat-val" id="stat-win-pct">—</span>
+          <span class="stat-label">Win %</span>
+        </div>
+        <div class="stat-block">
+          <span class="stat-val" id="stat-streak">—</span>
+          <span class="stat-label">Streak</span>
+        </div>
+        <div class="stat-block">
+          <span class="stat-val" id="stat-best">—</span>
+          <span class="stat-label">Best</span>
+        </div>
+      </div>
+
+      <!-- Actions -->
+      <div id="overlay-actions" class="overlay-actions">
+        <button id="share-btn" class="btn-secondary">Share result</button>
+        <button id="new-game-btn" class="btn-primary">Play Again</button>
+      </div>
+
+      <p id="share-feedback" class="share-feedback is-hidden">Copied to clipboard!</p>
+    </div>
+  </div>
+
+  <script type="module" src="/src/main.js"></script>
+</body>
+</html>
