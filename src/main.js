@@ -435,13 +435,14 @@ function bindEvents() {
     handleReveal(+cell.dataset.row, +cell.dataset.col);
   });
 
-  // Right click → flag
+  // Right click → flag (capture: true so nothing can block it)
   gridEl.addEventListener('contextmenu', (e) => {
     e.preventDefault();
+    e.stopPropagation();
     const cell = e.target.closest('.cell');
     if (!cell) return;
     handleFlag(+cell.dataset.row, +cell.dataset.col);
-  });
+  }, { capture: true });
 
   // Touch: long-press → flag (tap falls through to click event)
   gridEl.addEventListener('touchstart', (e) => {
