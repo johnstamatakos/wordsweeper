@@ -2,6 +2,9 @@
 
 A daily word game that combines Minesweeper with a hidden word puzzle. Reveal cells to collect letters, avoid bombs, then guess the word.
 
+<img width="507" height="751" alt="image" src="https://github.com/user-attachments/assets/b3901408-e65c-4d41-bbd7-d6a8aa074920" />
+
+
 ## How to play
 
 - **Click** a cell to reveal it
