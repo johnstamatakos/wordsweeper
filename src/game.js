@@ -250,5 +250,5 @@ export {
   GRID_SIZE, BOMB_COUNT, MAX_STRIKES,
   HIDDEN, REVEALED, FLAGGED,
   TYPE_EMPTY, TYPE_NUMBER, TYPE_LETTER, TYPE_BOMB,
-  createGame, revealCell, flagCell, submitGuess, neighbors,
+  createGame, revealCell, flagCell, submitGuess, revealAll, neighbors,
 };

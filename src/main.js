@@ -4,7 +4,7 @@ import {
   GRID_SIZE, MAX_STRIKES,
   HIDDEN, REVEALED, FLAGGED,
   TYPE_EMPTY, TYPE_NUMBER, TYPE_LETTER, TYPE_BOMB,
-  createGame, revealCell, flagCell, submitGuess,
+  createGame, revealCell, flagCell, submitGuess, revealAll,
 } from './game.js';
 import { getDailyPuzzle } from './puzzles.js';
 import { getDaySave, saveDayState, recordGameEnd, getStats } from './storage.js';
@@ -43,6 +43,14 @@ function init() {
   const puzzle    = getDailyPuzzle();
   currentDayIndex = puzzle.dayIndex;
   gameState       = createGame(puzzle.word, puzzle.seed);
+
+  // Puzzle number + date header
+  const now  = new Date();
+  const date = now.toLocaleDateString('en-US', {
+    timeZone: 'UTC', month: 'long', day: 'numeric', year: 'numeric',
+  });
+  document.getElementById('puzzle-meta').textContent =
+    `Puzzle #${currentDayIndex + 1} · ${date}`;
 
   // Restore saved progress for today if it exists
   const save = getDaySave(currentDayIndex);
@@ -375,6 +383,10 @@ function updateStatsDisplay() {
 // ----------------------------------------------------------------
 
 function showOverlay(type) {
+  // Reveal full board on game end
+  revealAll(gameState);
+  renderGrid();
+
   overlayResult.classList.remove('is-hidden');
   statsHeading.classList.add('is-hidden');
   overlayActions.classList.remove('is-hidden');
