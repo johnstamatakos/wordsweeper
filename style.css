@@ -174,7 +174,6 @@ main {
   line-height: 1;
   position: relative;
   transition: background 0.1s ease, transform 0.1s ease;
-  touch-action: none;
 }
 
 /* --- Cell: hidden --- */
