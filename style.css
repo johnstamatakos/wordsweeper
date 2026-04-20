@@ -138,13 +138,79 @@ main {
   text-align: center;
 }
 
-/* --- Instructions --- */
-.instructions {
-  font-size: 0.82rem;
+/* --- How to Play button --- */
+#how-to-play-btn {
+  font-size: 1rem;
+  font-weight: 700;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 2px solid var(--border);
   color: var(--text-muted);
-  text-align: center;
-  line-height: 1.6;
-  max-width: 360px;
+}
+
+/* --- Instructions modal --- */
+#instructions-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.55);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 200;
+  padding: 16px;
+  backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(2px);
+}
+
+#instructions-overlay.is-hidden {
+  display: none !important;
+}
+
+#instructions-card {
+  background: var(--surface);
+  border-radius: 12px;
+  padding: 36px 40px;
+  width: 100%;
+  max-width: 420px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+  animation: overlay-enter 0.25s ease-out;
+  position: relative;
+}
+
+#instructions-card h2 {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--text);
+}
+
+#instructions-close-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+}
+
+.instructions-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  font-size: 0.9rem;
+  color: var(--text);
+  line-height: 1.5;
+}
+
+.instructions-list ul {
+  list-style: none;
+  margin-top: 6px;
+  padding-left: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  color: var(--text-muted);
 }
 
 /* --- Grid --- */

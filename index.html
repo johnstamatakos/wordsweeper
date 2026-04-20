@@ -36,6 +36,7 @@
             <span class="strike-dot" aria-hidden="true"></span>
             <span class="strike-dot" aria-hidden="true"></span>
           </div>
+          <button id="how-to-play-btn" class="icon-btn" aria-label="How to play">?</button>
           <button id="stats-btn" class="icon-btn" aria-label="Statistics">📊</button>
         </div>
       </div>
@@ -43,7 +44,6 @@
 
     <main>
       <p id="puzzle-meta" class="puzzle-meta"></p>
-      <p class="instructions">Reveal cells to find hidden letters. Avoid 💣 bombs — you get 3 strikes. Numbers show <span class="bc">bombs</span> and <span class="lc">letters</span> in adjacent cells. Collect all letters, then guess the word. Right-click or long-press to flag a cell.</p>
 
       <div id="grid" role="grid" aria-label="Game grid"></div>
 
@@ -72,6 +72,27 @@
         </div>
       </section>
     </main>
+  </div>
+
+  <!-- Instructions modal -->
+  <div id="instructions-overlay" class="is-hidden" role="dialog" aria-modal="true" aria-label="How to play">
+    <div id="instructions-card">
+      <button id="instructions-close-btn" class="icon-btn" aria-label="Close">✕</button>
+      <h2>How to Play</h2>
+      <ul class="instructions-list">
+        <li><strong>Click</strong> a cell to reveal it.</li>
+        <li>Numbers show what's hiding in <strong>adjacent cells</strong>:
+          <ul>
+            <li><span class="bc">Red number</span> = bombs nearby</li>
+            <li><span class="lc">Blue number</span> = letters nearby</li>
+          </ul>
+        </li>
+        <li>Avoid 💣 <strong>bombs</strong> — hit 3 and it's game over.</li>
+        <li>Letters you reveal are collected in the <strong>pool below the board</strong>. Find all 5, then unscramble them to guess the word.</li>
+        <li>Feeling lucky? Hit <strong>"Guess Early"</strong> to guess before finding all the letters.</li>
+        <li><strong>Right-click</strong> (desktop) or <strong>long-press</strong> (mobile) to 🚩 flag a cell you think is a bomb.</li>
+      </ul>
+    </div>
   </div>
 
   <!-- Overlay for win / loss / stats -->

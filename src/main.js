@@ -25,7 +25,8 @@ let gridEl, strikesEl, poolEl, guessEarlyBtn, wordInputArea,
     overlayResult, statsHeading, overlayActions,
     shareBtn, shareFeedback,
     statPlayed, statWinPct, statStreak, statBest,
-    statsBtn, overlayCloseBtn;
+    statsBtn, overlayCloseBtn,
+    howToPlayBtn, instructionsOverlay, instructionsCloseBtn;
 
 // ----------------------------------------------------------------
 // Init
@@ -488,6 +489,15 @@ function bindEvents() {
     if (e.target === overlay) overlay.classList.add('is-hidden');
   });
 
+  // How to play button
+  howToPlayBtn.addEventListener('click', () => instructionsOverlay.classList.remove('is-hidden'));
+
+  // Instructions close button + backdrop
+  instructionsCloseBtn.addEventListener('click', () => instructionsOverlay.classList.add('is-hidden'));
+  instructionsOverlay.addEventListener('click', (e) => {
+    if (e.target === instructionsOverlay) instructionsOverlay.classList.add('is-hidden');
+  });
+
   // Share result button
   shareBtn.addEventListener('click', () => {
     const text = buildShareText();
@@ -546,8 +556,11 @@ document.addEventListener('DOMContentLoaded', () => {
   statWinPct      = document.getElementById('stat-win-pct');
   statStreak      = document.getElementById('stat-streak');
   statBest        = document.getElementById('stat-best');
-  statsBtn        = document.getElementById('stats-btn');
-  overlayCloseBtn = document.getElementById('overlay-close-btn');
+  statsBtn              = document.getElementById('stats-btn');
+  overlayCloseBtn       = document.getElementById('overlay-close-btn');
+  howToPlayBtn          = document.getElementById('how-to-play-btn');
+  instructionsOverlay   = document.getElementById('instructions-overlay');
+  instructionsCloseBtn  = document.getElementById('instructions-close-btn');
 
   bindEvents();
   init();
