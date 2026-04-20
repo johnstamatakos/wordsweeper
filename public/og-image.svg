@@ -1,0 +1,96 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <defs>
+    <filter id="grid-shadow" x="-10%" y="-10%" width="130%" height="130%">
+      <feDropShadow dx="0" dy="8" stdDeviation="20" flood-color="#000" flood-opacity="0.5"/>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1200" height="630" fill="#1a1a1b"/>
+
+  <!-- Left: text -->
+  <rect x="80" y="195" width="5" height="210" rx="2.5" fill="#538d4e"/>
+
+  <text x="108" y="278"
+        font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif"
+        font-size="80" font-weight="700" fill="white">Wordsweeper</text>
+
+  <text x="110" y="328"
+        font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif"
+        font-size="26" fill="#9ca3af">Daily word + minesweeper puzzle</text>
+
+  <rect x="110" y="358" width="236" height="38" rx="19" fill="#538d4e"/>
+  <text x="228" y="382"
+        font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif"
+        font-size="16" font-weight="600" fill="white" text-anchor="middle">New puzzle every day</text>
+
+  <text x="110" y="440"
+        font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif"
+        font-size="18" fill="#4b5563">wordsweeper.app</text>
+
+  <!-- Right: grid (6×6, cell=62px, gap=3px, step=65px) -->
+  <!-- Grid bg: x=715 y=116 w=396 h=396 -->
+  <rect x="715" y="116" width="396" height="396" rx="10" fill="#787c7e" filter="url(#grid-shadow)"/>
+
+  <!-- Row 0 — all hidden -->
+  <rect x="719" y="120" width="62" height="62" rx="4" fill="#a8b4bc"/>
+  <rect x="784" y="120" width="62" height="62" rx="4" fill="#a8b4bc"/>
+  <rect x="849" y="120" width="62" height="62" rx="4" fill="#a8b4bc"/>
+  <rect x="914" y="120" width="62" height="62" rx="4" fill="#a8b4bc"/>
+  <rect x="979" y="120" width="62" height="62" rx="4" fill="#a8b4bc"/>
+  <rect x="1044" y="120" width="62" height="62" rx="4" fill="#a8b4bc"/>
+
+  <!-- Row 1 — hidden, empty, number(1💣), hidden, hidden, hidden -->
+  <rect x="719" y="185" width="62" height="62" rx="4" fill="#a8b4bc"/>
+  <rect x="784" y="185" width="62" height="62" rx="4" fill="#dfe8ec"/>
+  <rect x="849" y="185" width="62" height="62" rx="4" fill="#f4f6f7" stroke="#e5e7eb" stroke-width="1"/>
+  <text x="880" y="216" font-family="-apple-system, sans-serif" font-size="22" font-weight="700"
+        fill="#dc2626" text-anchor="middle" dominant-baseline="central">1</text>
+  <rect x="914" y="185" width="62" height="62" rx="4" fill="#a8b4bc"/>
+  <rect x="979" y="185" width="62" height="62" rx="4" fill="#a8b4bc"/>
+  <rect x="1044" y="185" width="62" height="62" rx="4" fill="#a8b4bc"/>
+
+  <!-- Row 2 — hidden, empty, empty, letter W, hidden, hidden -->
+  <rect x="719" y="250" width="62" height="62" rx="4" fill="#a8b4bc"/>
+  <rect x="784" y="250" width="62" height="62" rx="4" fill="#dfe8ec"/>
+  <rect x="849" y="250" width="62" height="62" rx="4" fill="#dfe8ec"/>
+  <rect x="914" y="250" width="62" height="62" rx="4" fill="#538d4e"/>
+  <text x="945" y="281" font-family="-apple-system, sans-serif" font-size="24" font-weight="700"
+        fill="white" text-anchor="middle" dominant-baseline="central">W</text>
+  <rect x="979" y="250" width="62" height="62" rx="4" fill="#a8b4bc"/>
+  <rect x="1044" y="250" width="62" height="62" rx="4" fill="#a8b4bc"/>
+
+  <!-- Row 3 — number(1🔤), empty, empty, empty, flagged, hidden -->
+  <rect x="719" y="315" width="62" height="62" rx="4" fill="#f4f6f7" stroke="#e5e7eb" stroke-width="1"/>
+  <text x="750" y="346" font-family="-apple-system, sans-serif" font-size="22" font-weight="700"
+        fill="#2563eb" text-anchor="middle" dominant-baseline="central">1</text>
+  <rect x="784" y="315" width="62" height="62" rx="4" fill="#dfe8ec"/>
+  <rect x="849" y="315" width="62" height="62" rx="4" fill="#dfe8ec"/>
+  <rect x="914" y="315" width="62" height="62" rx="4" fill="#dfe8ec"/>
+  <rect x="979" y="315" width="62" height="62" rx="4" fill="#c9a227"/>
+  <text x="1010" y="346" font-family="-apple-system, sans-serif" font-size="26"
+        text-anchor="middle" dominant-baseline="central">🚩</text>
+  <rect x="1044" y="315" width="62" height="62" rx="4" fill="#a8b4bc"/>
+
+  <!-- Row 4 — hidden, letter O, empty, empty, hidden, hidden -->
+  <rect x="719" y="380" width="62" height="62" rx="4" fill="#a8b4bc"/>
+  <rect x="784" y="380" width="62" height="62" rx="4" fill="#538d4e"/>
+  <text x="815" y="411" font-family="-apple-system, sans-serif" font-size="24" font-weight="700"
+        fill="white" text-anchor="middle" dominant-baseline="central">O</text>
+  <rect x="849" y="380" width="62" height="62" rx="4" fill="#dfe8ec"/>
+  <rect x="914" y="380" width="62" height="62" rx="4" fill="#dfe8ec"/>
+  <rect x="979" y="380" width="62" height="62" rx="4" fill="#a8b4bc"/>
+  <rect x="1044" y="380" width="62" height="62" rx="4" fill="#a8b4bc"/>
+
+  <!-- Row 5 — hidden, hidden, letter R, number(2💣), hidden, hidden -->
+  <rect x="719" y="445" width="62" height="62" rx="4" fill="#a8b4bc"/>
+  <rect x="784" y="445" width="62" height="62" rx="4" fill="#a8b4bc"/>
+  <rect x="849" y="445" width="62" height="62" rx="4" fill="#538d4e"/>
+  <text x="880" y="476" font-family="-apple-system, sans-serif" font-size="24" font-weight="700"
+        fill="white" text-anchor="middle" dominant-baseline="central">R</text>
+  <rect x="914" y="445" width="62" height="62" rx="4" fill="#f4f6f7" stroke="#e5e7eb" stroke-width="1"/>
+  <text x="945" y="476" font-family="-apple-system, sans-serif" font-size="22" font-weight="700"
+        fill="#dc2626" text-anchor="middle" dominant-baseline="central">2</text>
+  <rect x="979" y="445" width="62" height="62" rx="4" fill="#a8b4bc"/>
+  <rect x="1044" y="445" width="62" height="62" rx="4" fill="#a8b4bc"/>
+</svg>
