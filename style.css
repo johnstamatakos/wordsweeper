@@ -225,16 +225,19 @@ main {
   gap: 3px;
 }
 
-.cell.revealed.number .bc {
+.bc {
   color: var(--bc-color);
-  font-size: 15px;
   font-weight: 700;
 }
 
-.cell.revealed.number .lc {
+.lc {
   color: var(--lc-color);
-  font-size: 15px;
   font-weight: 700;
+}
+
+.cell.revealed.number .bc,
+.cell.revealed.number .lc {
+  font-size: 15px;
 }
 
 /* --- Cell: revealed letter --- */
