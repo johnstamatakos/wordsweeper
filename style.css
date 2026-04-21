@@ -685,6 +685,19 @@ main {
   padding: 4px 8px;
 }
 
+/* --- Stats mode label --- */
+.stats-mode-label {
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  background: var(--btn-secondary-bg);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 2px 8px;
+}
+
 /* --- Overlay stats bar --- */
 .overlay-stats {
   display: flex;

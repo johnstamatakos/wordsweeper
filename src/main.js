@@ -27,7 +27,7 @@ let longPressFired = false;
 let gridEl, strikesEl, poolEl, poolLabel, wordInputArea,
     wordInput, submitGuessBtn, guessFeedback, overlay,
     overlayIcon, overlayTitle, overlayMsg,
-    overlayResult, statsHeading, overlayActions,
+    overlayResult, statsHeading, statsModeLabel, overlayActions,
     shareBtn, shareFeedback,
     statPlayed, statWinPct, statStreak, statBest,
     statsBtn, overlayCloseBtn,
@@ -454,6 +454,7 @@ function showOverlay(type) {
   overlayActions.classList.remove('is-hidden');
   shareBtn.classList.remove('is-hidden');
   shareFeedback.classList.add('is-hidden');
+  statsModeLabel.classList.toggle('is-hidden', !hardMode);
 
   if (type === 'won') {
     overlayIcon.textContent  = '🎉';
@@ -476,9 +477,10 @@ function showOverlay(type) {
 function showStatsOverlay() {
   overlayResult.classList.add('is-hidden');
   statsHeading.classList.remove('is-hidden');
-  statsHeading.textContent = hardMode ? 'Statistics · Hard Mode' : 'Statistics';
+  statsHeading.textContent = 'Statistics';
   overlayActions.classList.add('is-hidden');
   shareFeedback.classList.add('is-hidden');
+  statsModeLabel.classList.toggle('is-hidden', !hardMode);
 
   updateStatsDisplay();
   overlay.classList.remove('is-hidden');
@@ -645,6 +647,7 @@ document.addEventListener('DOMContentLoaded', () => {
   overlayMsg           = document.getElementById('overlay-message');
   overlayResult        = document.getElementById('overlay-result');
   statsHeading         = document.getElementById('stats-heading');
+  statsModeLabel       = document.getElementById('stats-mode-label');
   overlayActions       = document.getElementById('overlay-actions');
   shareBtn             = document.getElementById('share-btn');
   shareFeedback        = document.getElementById('share-feedback');
