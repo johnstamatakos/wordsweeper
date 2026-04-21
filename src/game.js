@@ -8,7 +8,7 @@ const MAX_STRIKES = 3;
 
 const NORMAL_GRID_SIZE = 8;
 const HARD_GRID_SIZE   = 10;
-const NORMAL_BOMBS     = 9;
+const NORMAL_BOMBS     = 7;
 const HARD_BOMBS       = 15;
 const HARD_DECOYS      = 3;
 

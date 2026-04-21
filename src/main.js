@@ -59,9 +59,13 @@ function init() {
   document.getElementById('puzzle-meta').textContent =
     `Puzzle #${currentDayIndex + 1} · ${date}`;
 
-  // Restore saved progress for today if it exists
+  // Restore saved progress for today if it exists, otherwise auto-reveal a start area
   const save = getDaySave(currentDayIndex, hardMode);
-  if (save) restoreGameState(save);
+  if (save) {
+    restoreGameState(save);
+  } else {
+    autoRevealStart();
+  }
 
   applyGridSizeStyles();
   renderGrid();
@@ -95,6 +99,25 @@ function applyGridSizeStyles() {
   gridEl.style.setProperty('--cs', `${cs}px`);
   gridEl.style.setProperty('--grid-cols', gameState.gridSize);
   gridEl.classList.toggle('hard-mode', hardMode);
+}
+
+// ----------------------------------------------------------------
+// Auto-reveal starting area for fresh games
+// ----------------------------------------------------------------
+
+function autoRevealStart() {
+  // Find the empty cell closest to the grid center and cascade-reveal it
+  const center = (gameState.gridSize - 1) / 2;
+  let bestCell = null, bestDist = Infinity;
+  for (let r = 0; r < gameState.gridSize; r++) {
+    for (let c = 0; c < gameState.gridSize; c++) {
+      if (gameState.grid[r][c].type === TYPE_EMPTY) {
+        const dist = Math.abs(r - center) + Math.abs(c - center);
+        if (dist < bestDist) { bestDist = dist; bestCell = [r, c]; }
+      }
+    }
+  }
+  if (bestCell) revealCell(gameState, bestCell[0], bestCell[1]);
 }
 
 // ----------------------------------------------------------------
