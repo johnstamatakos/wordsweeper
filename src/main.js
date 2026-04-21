@@ -11,7 +11,7 @@ import {
 import { getDailyPuzzle } from './puzzles.js';
 import {
   getDaySave, saveDayState, recordGameEnd, getStats,
-  getHardMode, setHardMode,
+  getHardMode, setHardMode, pruneSaves,
 } from './storage.js';
 
 let gameState       = null;
@@ -48,6 +48,8 @@ function init() {
   const puzzle    = getDailyPuzzle();
   currentDayIndex = puzzle.dayIndex;
   gameState       = createGame(puzzle.word, puzzle.seed, hardMode);
+
+  pruneSaves(currentDayIndex);
 
   // Puzzle number + date header
   const now  = new Date();

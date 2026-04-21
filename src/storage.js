@@ -74,11 +74,20 @@ export function saveDayState(dayIndex, state) {
       cells,
     };
     localStorage.setItem(saveKey(dayIndex, state.hardMode), JSON.stringify(save));
-    // Prune saves older than 7 days (both modes)
-    for (let d = dayIndex - 7; d >= Math.max(0, dayIndex - 14); d--) {
-      localStorage.removeItem(saveKey(d, false));
-      localStorage.removeItem(saveKey(d, true));
+  } catch {}
+}
+
+/** Remove all puzzle saves for days before currentDay. */
+export function pruneSaves(currentDay) {
+  try {
+    const toDelete = [];
+    for (let i = 0; i < localStorage.length; i++) {
+      const key = localStorage.key(i);
+      if (!key) continue;
+      const m = key.match(/^ws_save_(hard_)?(\d+)$/);
+      if (m && parseInt(m[2]) < currentDay) toDelete.push(key);
     }
+    toDelete.forEach(k => localStorage.removeItem(k));
   } catch {}
 }
 
