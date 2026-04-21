@@ -308,13 +308,6 @@ main {
   border: 1px solid var(--border);
 }
 
-.cell.revealed.number .counts {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 3px;
-}
-
 .bc {
   color: var(--bc-color);
   font-weight: 700;
@@ -325,9 +318,20 @@ main {
   font-weight: 700;
 }
 
-.cell.revealed.number .bc,
-.cell.revealed.number .lc {
-  font-size: 15px;
+.corner-tl {
+  position: absolute;
+  top: 4px;
+  left: 5px;
+  font-size: 13px;
+  line-height: 1;
+}
+
+.corner-br {
+  position: absolute;
+  bottom: 4px;
+  right: 5px;
+  font-size: 13px;
+  line-height: 1;
 }
 
 /* --- Cell: revealed letter (easy mode — always green) --- */

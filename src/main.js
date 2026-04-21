@@ -191,10 +191,10 @@ function getCellContent(cell) {
       const hasLetters = cell.letterCount > 0;
       if (!hasBombs && !hasLetters) return '';
       if (hasBombs && hasLetters) {
-        return `<span class="counts"><span class="bc">${cell.bombCount}</span><span class="lc">${cell.letterCount}</span></span>`;
+        return `<span class="lc corner-tl">${cell.letterCount}</span><span class="bc corner-br">${cell.bombCount}</span>`;
       }
-      if (hasBombs)   return `<span class="bc">${cell.bombCount}</span>`;
-      return `<span class="lc">${cell.letterCount}</span>`;
+      if (hasBombs)   return `<span class="bc corner-br">${cell.bombCount}</span>`;
+      return `<span class="lc corner-tl">${cell.letterCount}</span>`;
     }
     default: return '';
   }
