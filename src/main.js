@@ -6,7 +6,7 @@ import {
   HIDDEN, REVEALED, FLAGGED,
   TYPE_EMPTY, TYPE_NUMBER, TYPE_LETTER, TYPE_BOMB,
   createGame, revealCell, flagCell, submitGuess, revealAll,
-  toggleLetterSelection,
+  toggleLetterSelection, checkAllBombsFlagged,
 } from './game.js';
 import { getDailyPuzzle } from './puzzles.js';
 import {
@@ -14,9 +14,10 @@ import {
   getHardMode, setHardMode, pruneSaves,
 } from './storage.js';
 
-let gameState       = null;
-let currentDayIndex = 0;
-let hardMode        = false;
+let gameState         = null;
+let currentDayIndex   = 0;
+let hardMode          = false;
+let lastWonWithPerfect = false;
 
 // Long-press state for touch flagging
 let touchTimer     = null;
@@ -28,8 +29,8 @@ let gridEl, strikesEl, poolEl, poolLabel, wordInputArea,
     wordInput, submitGuessBtn, guessFeedback, overlay,
     overlayIcon, overlayTitle, overlayMsg,
     overlayResult, statsHeading, statsModeLabel, overlayActions,
-    shareBtn, shareFeedback,
-    statPlayed, statWinPct, statStreak, statBest,
+    shareBtn, shareFeedback, perfectBadgeEl,
+    statPlayed, statWinPct, statStreak, statBest, statPerfect,
     statsBtn, overlayCloseBtn,
     howToPlayBtn, instructionsOverlay, instructionsCloseBtn,
     settingsBtn, settingsOverlay, settingsCloseBtn, hardModeToggle,
@@ -365,7 +366,6 @@ function handleSubmitGuess() {
 
   if (result.event === 'won') {
     renderStrikes();
-    recordGameEnd(currentDayIndex, true, hardMode);
     saveProgress();
     celebrateWin();
     setTimeout(() => showOverlay('won'), 550);
@@ -401,7 +401,8 @@ function buildShareText() {
   const result  = gameState.phase === 'won' ? '✅' : '❌';
   const strikes = '💣'.repeat(gameState.strikes) + '⬜'.repeat(MAX_STRIKES - gameState.strikes);
   const modeTag = hardMode ? ' [Hard Mode]' : '';
-  return `Wordsweeper #${currentDayIndex + 1}${modeTag} ${result}\n${strikes}`;
+  const perfect = lastWonWithPerfect ? '\n🚩 All bombs flagged!' : '';
+  return `Wordsweeper #${currentDayIndex + 1}${modeTag} ${result}\n${strikes}${perfect}`;
 }
 
 // ----------------------------------------------------------------
@@ -409,13 +410,14 @@ function buildShareText() {
 // ----------------------------------------------------------------
 
 function updateStatsDisplay() {
-  const stats         = getStats(hardMode);
+  const stats            = getStats(hardMode);
   statPlayed.textContent = stats.played;
   statWinPct.textContent = stats.played > 0
     ? Math.round((stats.won / stats.played) * 100)
     : 0;
-  statStreak.textContent = stats.currentStreak;
-  statBest.textContent   = stats.maxStreak;
+  statStreak.textContent  = stats.currentStreak;
+  statBest.textContent    = stats.maxStreak;
+  statPerfect.textContent = stats.perfectFlags || 0;
 }
 
 // ----------------------------------------------------------------
@@ -423,6 +425,12 @@ function updateStatsDisplay() {
 // ----------------------------------------------------------------
 
 function showOverlay(type) {
+  // Check perfect flags BEFORE revealAll overwrites flag visibility
+  if (type === 'won') {
+    lastWonWithPerfect = checkAllBombsFlagged(gameState);
+    recordGameEnd(currentDayIndex, true, hardMode, lastWonWithPerfect);
+  }
+
   revealAll(gameState);
   renderGrid();
 
@@ -437,10 +445,12 @@ function showOverlay(type) {
     overlayIcon.textContent  = '🎉';
     overlayTitle.textContent = 'You got it!';
     overlayMsg.textContent   = `The word was ${gameState.targetWord}.`;
+    perfectBadgeEl.classList.toggle('is-hidden', !lastWonWithPerfect);
   } else {
     overlayIcon.textContent  = '💥';
     overlayTitle.textContent = 'Game Over';
     overlayMsg.textContent   = `The word was ${gameState.targetWord}.`;
+    perfectBadgeEl.classList.add('is-hidden');
   }
 
   updateStatsDisplay();
@@ -628,10 +638,12 @@ document.addEventListener('DOMContentLoaded', () => {
   overlayActions       = document.getElementById('overlay-actions');
   shareBtn             = document.getElementById('share-btn');
   shareFeedback        = document.getElementById('share-feedback');
+  perfectBadgeEl       = document.getElementById('perfect-badge');
   statPlayed           = document.getElementById('stat-played');
   statWinPct           = document.getElementById('stat-win-pct');
   statStreak           = document.getElementById('stat-streak');
   statBest             = document.getElementById('stat-best');
+  statPerfect          = document.getElementById('stat-perfect');
   statsBtn             = document.getElementById('stats-btn');
   overlayCloseBtn      = document.getElementById('overlay-close-btn');
   howToPlayBtn         = document.getElementById('how-to-play-btn');

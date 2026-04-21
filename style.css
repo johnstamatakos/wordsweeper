@@ -925,6 +925,18 @@ footer a {
   transform: translateX(20px);
 }
 
+/* --- Perfect flags badge --- */
+.perfect-badge {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #92400e;
+  background: rgba(201, 162, 39, 0.12);
+  border: 1px solid rgba(201, 162, 39, 0.4);
+  border-radius: 6px;
+  padding: 4px 12px;
+  text-align: center;
+}
+
 /* --- Instructions divider and hard mode subheading --- */
 .instructions-divider {
   border: none;

@@ -362,6 +362,23 @@ function revealAll(state) {
       state.grid[r][c].visibility = REVEALED;
 }
 
+/**
+ * Returns true if every bomb is flagged and no non-bomb cell is flagged.
+ * Must be called BEFORE revealAll (on win, the board is not yet fully revealed).
+ */
+function checkAllBombsFlagged(state) {
+  for (const [r, c] of state.bombPositions) {
+    if (state.grid[r][c].visibility !== FLAGGED) return false;
+  }
+  for (let r = 0; r < state.gridSize; r++) {
+    for (let c = 0; c < state.gridSize; c++) {
+      if (state.grid[r][c].visibility === FLAGGED && state.grid[r][c].type !== TYPE_BOMB)
+        return false;
+    }
+  }
+  return true;
+}
+
 // --- Exports ---
 
 export {
@@ -370,5 +387,5 @@ export {
   HIDDEN, REVEALED, FLAGGED,
   TYPE_EMPTY, TYPE_NUMBER, TYPE_LETTER, TYPE_BOMB,
   createGame, revealCell, flagCell, submitGuess, revealAll,
-  toggleLetterSelection, neighbors,
+  toggleLetterSelection, neighbors, checkAllBombsFlagged,
 };

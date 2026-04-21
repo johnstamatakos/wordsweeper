@@ -9,6 +9,7 @@ const saveKey = (day, hard) => hard ? `ws_save_hard_${day}` : `ws_save_${day}`;
 const DEFAULT_STATS = {
   played: 0,
   won: 0,
+  perfectFlags: 0,
   currentStreak: 0,
   maxStreak: 0,
   lastPlayedDay: -1,
@@ -95,7 +96,7 @@ export function pruneSaves(currentDay) {
  * Record a completed game and update streaks.
  * Stats are tracked separately for normal and hard mode.
  */
-export function recordGameEnd(dayIndex, won, hardMode = false) {
+export function recordGameEnd(dayIndex, won, hardMode = false, perfect = false) {
   const stats = getStats(hardMode);
 
   // Already recorded this day — nothing to do
@@ -105,6 +106,7 @@ export function recordGameEnd(dayIndex, won, hardMode = false) {
 
   if (won) {
     stats.won += 1;
+    if (perfect) stats.perfectFlags = (stats.perfectFlags || 0) + 1;
     stats.currentStreak = (stats.lastWonDay === dayIndex - 1)
       ? stats.currentStreak + 1
       : 1;
