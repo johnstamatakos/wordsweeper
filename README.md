@@ -2,10 +2,11 @@
 
 A daily word game that combines Minesweeper with a hidden word puzzle. Reveal cells to collect letters, avoid bombs, then guess the word.
 
-<p align="center">
-  <img width="507" height="751" alt="image" src="https://github.com/user-attachments/assets/b3901408-e65c-4d41-bbd7-d6a8aa074920" />
-</p>
+**[Play at wordsweeper.app](https://wordsweeper.app)**
 
+<p align="center">
+  <img alt="Wordsweeper" src="public/og-image.png" />
+</p>
 
 ## How to play
 
@@ -14,6 +15,7 @@ A daily word game that combines Minesweeper with a hidden word puzzle. Reveal ce
 - Collect all the hidden letters without hitting 3 bombs
 - Once you have all the letters, guess the word
 - You can also guess early if you think you know it
+- Flag every bomb correctly to earn a perfect bonus
 
 A new puzzle every day.
 
