@@ -216,7 +216,7 @@ function cascadeReveal(state, r, c) {
 }
 
 function revealCell(state, r, c) {
-  if (state.phase !== 'playing') return { event: 'game_over' };
+  if (state.phase === 'won' || state.phase === 'lost') return { event: 'game_over' };
 
   const cell = state.grid[r][c];
   if (cell.visibility === REVEALED) return { event: 'already_revealed' };
