@@ -37,6 +37,16 @@ let gridEl, strikesEl, poolEl, poolLabel, wordInputArea,
     countdownEl;
 
 // ----------------------------------------------------------------
+// Analytics
+// ----------------------------------------------------------------
+
+function track(event, props = {}) {
+  if (window.posthog) {
+    posthog.capture(event, { puzzle_number: currentDayIndex + 1, hard_mode: hardMode, ...props });
+  }
+}
+
+// ----------------------------------------------------------------
 // Init
 // ----------------------------------------------------------------
 
@@ -63,6 +73,7 @@ function init() {
   // Restore saved progress for today if it exists
   const save = getDaySave(currentDayIndex, hardMode);
   if (save) restoreGameState(save);
+  else track('game_started');
 
   applyGridSizeStyles();
   renderGrid();
@@ -347,7 +358,9 @@ function celebrateWin() {
 function checkPhase() {
   // 'guessing' in easy mode: all letters found; input is already always visible
   if (gameState.phase === 'lost') {
+    const isNewLoss = getStats(hardMode).lastPlayedDay !== currentDayIndex;
     recordGameEnd(currentDayIndex, false, hardMode);
+    if (isNewLoss) track('game_lost', { cause: 'bomb' });
     saveProgress();
     showOverlay('lost');
   }
@@ -385,7 +398,9 @@ function handleSubmitGuess() {
     wordInput.addEventListener('animationend', () => wordInput.classList.remove('shake'), { once: true });
 
     if (gameState.phase === 'lost') {
+      const isNewLoss = getStats(hardMode).lastPlayedDay !== currentDayIndex;
       recordGameEnd(currentDayIndex, false, hardMode);
+      if (isNewLoss) track('game_lost', { cause: 'wrong_guess' });
       saveProgress();
       renderGrid();
       setTimeout(() => showOverlay('lost'), 600);
@@ -428,7 +443,9 @@ function showOverlay(type) {
   // Check perfect flags BEFORE revealAll overwrites flag visibility
   if (type === 'won') {
     lastWonWithPerfect = checkAllBombsFlagged(gameState);
+    const isNewWin = getStats(hardMode).lastPlayedDay !== currentDayIndex;
     recordGameEnd(currentDayIndex, true, hardMode, lastWonWithPerfect);
+    if (isNewWin) track('game_won', { strikes: gameState.strikes, perfect_flags: lastWonWithPerfect });
   }
 
   revealAll(gameState);
