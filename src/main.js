@@ -643,4 +643,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
   updateCountdown();
   setInterval(updateCountdown, 1000);
+
+  // Show instructions automatically for first-time visitors
+  if (!localStorage.getItem('ws_visited')) {
+    localStorage.setItem('ws_visited', '1');
+    instructionsOverlay.classList.remove('is-hidden');
+  }
 });
