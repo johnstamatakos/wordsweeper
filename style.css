@@ -711,11 +711,11 @@ main {
 }
 
 .stat-block {
+  flex: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 3px;
-  min-width: 52px;
 }
 
 .stat-val {
