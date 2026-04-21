@@ -215,12 +215,70 @@ function cascadeReveal(state, r, c) {
   }
 }
 
+/**
+ * If the very first reveal hits a bomb, move it to a random safe cell and
+ * recalculate the affected number cells so the player always gets a safe start.
+ */
+function relocateBomb(state, r, c) {
+  const candidates = [];
+  for (let row = 0; row < state.gridSize; row++) {
+    for (let col = 0; col < state.gridSize; col++) {
+      if (row === r && col === c) continue;
+      const cell = state.grid[row][col];
+      if (cell.type === TYPE_BOMB || cell.type === TYPE_LETTER) continue;
+      candidates.push([row, col]);
+    }
+  }
+  if (candidates.length === 0) return;
+
+  // Prefer a spot not adjacent to the clicked cell so the area opens cleanly
+  const safe = candidates.filter(([row, col]) => !isAdjacent(row, col, r, c));
+  const pool = safe.length > 0 ? safe : candidates;
+  const [nr, nc] = pool[Math.floor(Math.random() * pool.length)];
+
+  state.grid[r][c].type  = TYPE_EMPTY; // temporary; recalculated below
+  state.grid[nr][nc].type = TYPE_BOMB;
+
+  // Update bombPositions record
+  state.bombPositions = state.bombPositions
+    .filter(([br, bc]) => !(br === r && bc === c));
+  state.bombPositions.push([nr, nc]);
+
+  // Recalculate all non-bomb, non-letter cells near old and new bomb positions
+  const toRecalc = new Set([`${r},${c}`]);
+  for (const [ar, ac] of neighbors(r, c, state.gridSize)) {
+    if (state.grid[ar][ac].type !== TYPE_BOMB && state.grid[ar][ac].type !== TYPE_LETTER)
+      toRecalc.add(`${ar},${ac}`);
+  }
+  for (const [ar, ac] of neighbors(nr, nc, state.gridSize)) {
+    if (state.grid[ar][ac].type !== TYPE_BOMB && state.grid[ar][ac].type !== TYPE_LETTER)
+      toRecalc.add(`${ar},${ac}`);
+  }
+
+  for (const key of toRecalc) {
+    const [row, col] = key.split(',').map(Number);
+    let bombs = 0, letters = 0;
+    for (const [nr2, nc2] of neighbors(row, col, state.gridSize)) {
+      if (state.grid[nr2][nc2].type === TYPE_BOMB) bombs++;
+      if (state.grid[nr2][nc2].type === TYPE_LETTER && !state.grid[nr2][nc2].isDecoy) letters++;
+    }
+    state.grid[row][col].bombCount   = bombs;
+    state.grid[row][col].letterCount = letters;
+    state.grid[row][col].type        = (bombs === 0 && letters === 0) ? TYPE_EMPTY : TYPE_NUMBER;
+  }
+}
+
 function revealCell(state, r, c) {
   if (state.phase === 'won' || state.phase === 'lost') return { event: 'game_over' };
 
   const cell = state.grid[r][c];
   if (cell.visibility === REVEALED) return { event: 'already_revealed' };
   if (cell.visibility === FLAGGED)  return { event: 'flagged' };
+
+  // First click safety: silently relocate any bomb before it can hurt the player
+  if (state.revealedCount === 0 && cell.type === TYPE_BOMB) {
+    relocateBomb(state, r, c);
+  }
 
   if (cell.type === TYPE_BOMB) {
     cell.visibility = REVEALED;
