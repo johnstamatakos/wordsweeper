@@ -500,9 +500,11 @@ function bindEvents() {
   });
 
   // Right click → flag (capture: true so nothing can block it)
+  // Skip if the touch long-press already handled it to avoid double-toggling
   gridEl.addEventListener('contextmenu', (e) => {
     e.preventDefault();
     e.stopPropagation();
+    if (longPressFired) return;
     const cell = e.target.closest('.cell');
     if (!cell) return;
     handleFlag(+cell.dataset.row, +cell.dataset.col);
