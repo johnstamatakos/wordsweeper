@@ -37,6 +37,7 @@
             <span class="strike-dot" aria-hidden="true"></span>
           </div>
           <button id="how-to-play-btn" class="icon-btn" aria-label="How to play">?</button>
+          <button id="settings-btn" class="icon-btn" aria-label="Settings">⚙</button>
           <button id="stats-btn" class="icon-btn" aria-label="Statistics">📊</button>
         </div>
       </div>
@@ -44,18 +45,17 @@
 
     <main>
       <p id="puzzle-meta" class="puzzle-meta"></p>
+      <p id="countdown" class="countdown"></p>
 
       <div id="grid" role="grid" aria-label="Game grid"></div>
 
       <section id="pool-section" aria-label="Collected letters">
-        <p class="pool-label">Letters found</p>
+        <p class="pool-label" id="pool-label">Letters found</p>
         <div id="letter-pool"></div>
       </section>
 
       <section id="guess-section">
-        <button id="guess-early-btn" class="btn-secondary">Guess Early</button>
-
-        <div id="word-input-area" class="is-hidden">
+        <div id="word-input-area">
           <div class="input-row">
             <input
               type="text"
@@ -89,9 +89,38 @@
         </li>
         <li>Avoid 💣 <strong>bombs</strong> — hit 3 and it's game over.</li>
         <li>Letters you reveal are collected in the <strong>pool below the board</strong>. Find all 5, then unscramble them to guess the word.</li>
-        <li>Feeling lucky? Hit <strong>"Guess Early"</strong> to guess before finding all the letters.</li>
+        <li>You can guess <strong>any time</strong> — you don't have to find all the letters first.</li>
         <li><strong>Right-click</strong> (desktop) or <strong>long-press</strong> (mobile) to 🚩 flag a cell you think is a bomb.</li>
       </ul>
+
+      <div class="instructions-divider"></div>
+
+      <h3 class="instructions-subheading">Hard Mode</h3>
+      <ul class="instructions-list">
+        <li>10×10 grid with more bombs and <strong>3 decoy letters</strong> mixed in among the real ones.</li>
+        <li>The <span class="lc">blue numbers</span> only count <strong>real word letters</strong> — decoys are invisible to the numbers. Use the clues to figure out which letters actually belong to the word.</li>
+        <li>Letters <strong>don't go to the pool automatically</strong>. Click a revealed letter to add it; click again to remove it.</li>
+        <li>Enable Hard Mode via the <strong>⚙ Settings</strong> button. Your preference carries over to the next day's puzzle.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Settings modal -->
+  <div id="settings-overlay" class="is-hidden" role="dialog" aria-modal="true" aria-label="Settings">
+    <div id="settings-card">
+      <button id="settings-close-btn" class="icon-btn" aria-label="Close">✕</button>
+      <h2>Settings</h2>
+      <div class="setting-row">
+        <div class="setting-info">
+          <strong>Hard Mode</strong>
+          <p class="setting-desc">10×10 grid, more bombs, decoy letters. Blue numbers only count real word letters. Select letters manually from the board.</p>
+        </div>
+        <label class="toggle" aria-label="Toggle hard mode">
+          <input type="checkbox" id="hard-mode-toggle">
+          <span class="toggle-track"></span>
+        </label>
+      </div>
+      <p class="setting-note">Persists to the next day's puzzle. Stats tracked separately from normal mode.</p>
     </div>
   </div>
 
