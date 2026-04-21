@@ -89,6 +89,21 @@ h1 {
   color: var(--text);
 }
 
+/* --- Strikes row (below countdown, above grid) --- */
+#strikes-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.strikes-label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
 /* --- Strike dots --- */
 #strikes {
   display: flex;

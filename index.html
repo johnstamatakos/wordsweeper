@@ -31,11 +31,6 @@
       <div class="header-inner">
         <h1>Wordsweeper</h1>
         <div class="header-controls">
-          <div id="strikes" aria-label="Strikes">
-            <span class="strike-dot" aria-hidden="true"></span>
-            <span class="strike-dot" aria-hidden="true"></span>
-            <span class="strike-dot" aria-hidden="true"></span>
-          </div>
           <button id="how-to-play-btn" class="icon-btn" aria-label="How to play">?</button>
           <button id="settings-btn" class="icon-btn" aria-label="Settings">⚙</button>
           <button id="stats-btn" class="icon-btn" aria-label="Statistics">📊</button>
@@ -46,6 +41,15 @@
     <main>
       <p id="puzzle-meta" class="puzzle-meta"></p>
       <p id="countdown" class="countdown"></p>
+
+      <div id="strikes-row">
+        <span class="strikes-label">Strikes</span>
+        <div id="strikes" aria-label="Strikes">
+          <span class="strike-dot" aria-hidden="true"></span>
+          <span class="strike-dot" aria-hidden="true"></span>
+          <span class="strike-dot" aria-hidden="true"></span>
+        </div>
+      </div>
 
       <div id="grid" role="grid" aria-label="Game grid"></div>
 
