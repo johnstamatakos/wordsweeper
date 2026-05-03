@@ -417,7 +417,10 @@ function buildShareText() {
   const strikes = '💣'.repeat(gameState.strikes) + '⬜'.repeat(MAX_STRIKES - gameState.strikes);
   const modeTag = hardMode ? ' [Hard Mode]' : '';
   const perfect = lastWonWithPerfect ? '\n🚩 All bombs flagged!' : '';
-  return `Wordsweeper #${currentDayIndex + 1}${modeTag} ${result}\n${strikes}${perfect}`;
+  const url     = window.location.href;
+  const plain   = `Wordsweeper #${currentDayIndex + 1}${modeTag} ${result}\n${strikes}${perfect}\n${url}`;
+  const html    = `<a href="${url}">Wordsweeper #${currentDayIndex + 1}</a>${modeTag} ${result}<br>${strikes}${perfect.replace('\n', '<br>')}`;
+  return { plain, html };
 }
 
 // ----------------------------------------------------------------
@@ -578,14 +581,24 @@ function bindEvents() {
 
   // Share result
   shareBtn.addEventListener('click', () => {
-    const text = buildShareText();
-    if (navigator.clipboard && navigator.clipboard.writeText) {
-      navigator.clipboard.writeText(text).then(() => {
+    const { plain, html } = buildShareText();
+    if (navigator.clipboard && window.ClipboardItem) {
+      navigator.clipboard.write([
+        new ClipboardItem({
+          'text/plain': new Blob([plain], { type: 'text/plain' }),
+          'text/html':  new Blob([html],  { type: 'text/html'  }),
+        }),
+      ]).then(() => {
         shareFeedback.textContent = 'Copied to clipboard!';
         shareFeedback.classList.remove('is-hidden');
-      }).catch(() => fallbackCopy(text));
+      }).catch(() => fallbackCopy(plain));
+    } else if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(plain).then(() => {
+        shareFeedback.textContent = 'Copied to clipboard!';
+        shareFeedback.classList.remove('is-hidden');
+      }).catch(() => fallbackCopy(plain));
     } else {
-      fallbackCopy(text);
+      fallbackCopy(plain);
     }
   });
 
